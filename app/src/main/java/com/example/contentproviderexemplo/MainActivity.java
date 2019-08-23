@@ -30,7 +30,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 ContentValues values = new ContentValues();
-                values.put(ContentProvider.NAME, "ALLEF");
+                values.put(ContentProvider.NAME, "BRENDEL");
 
                 values.put(ContentProvider.GRADE, "helooo");
 
@@ -45,7 +45,7 @@ public class MainActivity extends AppCompatActivity {
         botaoVer.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                String URL = "com.example.contentproviderexemplo";
+                String URL = "content://com.example.contentproviderexemplo/pessoas";
 
                 Uri pessoas = Uri.parse(URL);
                 Cursor c = getContentResolver().query(pessoas, null, null, null, "nome");

@@ -10,6 +10,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.database.sqlite.SQLiteQueryBuilder;
 import android.net.Uri;
+import android.util.Log;
 
 import java.util.HashMap;
 
@@ -25,13 +26,11 @@ public class ContentProvider extends android.content.ContentProvider {
     public static final int PESSOA = 1;
     public static final int PESSOA_ID = 2;
 
-    private static HashMap<String, String> PESSOAS_MAP;
-
     static final UriMatcher uriMatcher;
     static {
         uriMatcher = new UriMatcher(UriMatcher.NO_MATCH);
-        uriMatcher.addURI(AUTHORITY, "pessoa", PESSOA);
-        uriMatcher.addURI(AUTHORITY, "pessoa_id/#", PESSOA_ID);
+        uriMatcher.addURI(AUTHORITY, "pessoas", PESSOA);
+        uriMatcher.addURI(AUTHORITY, "pessoas/#", PESSOA_ID);
     }
 
     @Override
@@ -48,14 +47,15 @@ public class ContentProvider extends android.content.ContentProvider {
         SQLiteQueryBuilder qb = new SQLiteQueryBuilder();
         qb.setTables(PESSOAS_TABLE_NAME);
 
-       /* switch (uriMatcher.match(uri)){
+       switch (uriMatcher.match(uri)){
             case PESSOA:
-                qb.setProjectionMap(PESSOAS_MAP);
+                Log.i("TAG", "PESSOA");
                 break;
             case PESSOA_ID:
                 qb.appendWhere( _ID + "=" + uri.getPathSegments().get(1));
+                Log.i("TAG", "PESSOA_ID");
                 break;
-        }*/
+        }
         Cursor cursor = qb.query(db, strings, s, strings1, null, null, s1);
         cursor.setNotificationUri(getContext().getContentResolver(), uri);
         return cursor;
@@ -75,7 +75,7 @@ public class ContentProvider extends android.content.ContentProvider {
             getContext().getContentResolver().notifyChange(_uri, null);
             return _uri;
         }
-        throw new SQLException("Failed to add a record into " + uri);
+        throw new SQLException("Falha  " + uri);
     }
 
     @Override
@@ -93,10 +93,7 @@ public class ContentProvider extends android.content.ContentProvider {
     static final String PESSOAS_TABLE_NAME = "pessoas";
     static final int DATABASE_VERSION = 1;
     static final String CREATE_DB_TABLE =
-            " CREATE TABLE " + PESSOAS_TABLE_NAME +
-                    " (_id INTEGER PRIMARY KEY AUTOINCREMENT, " +
-                    " nome TEXT NOT NULL, " +
-                    " grade TEXT NOT NULL);";
+            " CREATE TABLE pessoas (_id INTEGER PRIMARY KEY AUTOINCREMENT,  nome TEXT NOT NULL,  grade TEXT NOT NULL);";
 
 
     private static class DatabaseHelper extends SQLiteOpenHelper {
