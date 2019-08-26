@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#000"
+    android:orientation="vertical"
+    tools:context=".MainActivity">
+
+    <EditText
+        android:background="#ffff"
+        android:id="@+id/editText"
+        android:hint="Digite o ID do Nome"
+        android:layout_margin="10dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <Button
+        android:background="#ffff"
+        android:layout_margin="10dp"
+        android:id="@+id/botao"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Ver nome"
+        android:onClick="receberDadosContent"/>
+
+    <EditText
+        android:background="#ffff"
+        android:id="@+id/editText2"
+        android:hint="Digite o ID do Nome"
+        android:layout_margin="10dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <Button
+        android:background="#ffff"
+        android:layout_margin="10dp"
+        android:id="@+id/botao2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Deletar nome"/>
+
+    <EditText
+        android:background="#ffff"
+        android:id="@+id/editText3"
+        android:hint="Digite o id"
+        android:layout_margin="10dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+
+    <EditText
+        android:background="#ffff"
+        android:id="@+id/editText4"
+        android:hint="Digite o valor"
+        android:layout_margin="10dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <Button
+        android:background="#ffff"
+        android:layout_margin="10dp"
+        android:id="@+id/botao3"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Atualizar nome"
+        android:onClick="atualizarNome"/>
+
+    <ListView
+        android:id="@+id/listView"
+        android:layout_margin="10dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+
+    </ListView>
+</LinearLayout>

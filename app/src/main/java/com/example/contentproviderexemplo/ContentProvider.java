@@ -39,30 +39,39 @@ public class ContentProvider extends android.content.ContentProvider {
         DatabaseHelper dbHelper = new DatabaseHelper(context);
         db = dbHelper.getWritableDatabase();
 
-        return true;
+        if(db != null){
+            return true;
+        }
+        return false;
     }
 
     @Override
-    public Cursor query(Uri uri, String[] strings, String s, String[] strings1, String s1) {
+    public Cursor query(Uri uri, String[] projection, String selection, String[] selectionArgs, String sortOrder) {
         SQLiteQueryBuilder qb = new SQLiteQueryBuilder();
         qb.setTables(PESSOAS_TABLE_NAME);
 
        switch (uriMatcher.match(uri)){
             case PESSOA:
-                Log.i("TAG", "PESSOA");
                 break;
             case PESSOA_ID:
                 qb.appendWhere( _ID + "=" + uri.getPathSegments().get(1));
-                Log.i("TAG", "PESSOA_ID");
                 break;
         }
-        Cursor cursor = qb.query(db, strings, s, strings1, null, null, s1);
+        Cursor cursor = qb.query(db, projection, selection, selectionArgs, null, null, sortOrder);
         cursor.setNotificationUri(getContext().getContentResolver(), uri);
         return cursor;
     }
 
     @Override
     public String getType(Uri uri) {
+
+//            switch (uriMatcher.match(uri)){
+//            case PESSOA:
+//                return "vnd.android.cursor.dir/pessoas";
+//            case PESSOA_ID:
+//                String id = uri.getLastPathSegment();
+//                return "vnd.android.cursor.item/pessoas/"+ id;
+//        }
         return null;
     }
 
@@ -80,12 +89,36 @@ public class ContentProvider extends android.content.ContentProvider {
 
     @Override
     public int delete(Uri uri, String s, String[] strings) {
-        return 0;
+
+        int linha = 0;
+
+        switch (uriMatcher.match(uri)){
+            case PESSOA:
+                break;
+            case PESSOA_ID:
+                String id = uri.getLastPathSegment();
+                linha = db.delete(PESSOAS_TABLE_NAME, _ID + "=" + id, strings);
+                break;
+        }
+        getContext().getContentResolver().notifyChange(uri, null);
+        return linha;
     }
 
     @Override
     public int update(Uri uri, ContentValues contentValues, String s, String[] strings) {
-        return 0;
+
+        int linha = 0;
+
+        switch (uriMatcher.match(uri)){
+            case PESSOA:
+                break;
+            case PESSOA_ID:
+                String id = uri.getLastPathSegment();
+                linha = db.update(PESSOAS_TABLE_NAME, contentValues, _ID + "=" + id ,null);
+                break;
+        }
+        getContext().getContentResolver().notifyChange(uri, null);
+        return linha;
     }
 
     private SQLiteDatabase db;

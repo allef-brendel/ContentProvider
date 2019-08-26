@@ -11,12 +11,13 @@ import android.provider.ContactsContract;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.Toast;
 
 public class MainActivity extends AppCompatActivity {
 
+    private EditText editText;
     private Button botaoAdd;
-    private Button botaoVer;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -24,13 +25,13 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         botaoAdd = findViewById(R.id.botaoadd);
-        botaoVer = findViewById(R.id.botaover);
+        editText = findViewById(R.id.editText);
 
         botaoAdd.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 ContentValues values = new ContentValues();
-                values.put(ContentProvider.NAME, "BRENDEL");
+                values.put(ContentProvider.NAME, editText.getText().toString());
 
                 values.put(ContentProvider.GRADE, "helooo");
 
@@ -41,24 +42,5 @@ public class MainActivity extends AppCompatActivity {
                         uri.toString(), Toast.LENGTH_LONG).show();
             }
         });
-
-        botaoVer.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                String URL = "content://com.example.contentproviderexemplo/pessoas";
-
-                Uri pessoas = Uri.parse(URL);
-                Cursor c = getContentResolver().query(pessoas, null, null, null, "nome");
-
-                if (c.moveToFirst()) {
-                    do {
-                        Toast.makeText(MainActivity.this, "TAG> "+ c.getString(c.getColumnIndex(ContentProvider.NAME)), Toast.LENGTH_SHORT).show();
-                    } while (c.moveToNext());
-                }
-            }
-        });
-
-
-
     }
 }
